@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8080", // change if needed
+  baseURL: "https://job-portal-backend-aagn.onrender.com", // change if needed
 });
 
 instance.interceptors.request.use((config) => {
