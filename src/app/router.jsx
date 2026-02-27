@@ -5,7 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Jobs from "../pages/Jobs";
 import JobDetails from "../pages/JobDetails";
-import Home from "../pages/home";
+import Home from "../pages/Home";
 import MyApplications from "../pages/MyApplications";
 import Applicants from "../pages/Applicants"; // ⭐ NEW
 import RecruiterDashboard from "../pages/RecruiterDashboard";
