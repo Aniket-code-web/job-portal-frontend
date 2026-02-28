@@ -2,8 +2,8 @@
 
 A full-stack job portal frontend built with React that allows job seekers to search and apply for jobs and recruiters to post and manage listings.
 
-🔗 **Live Demo:** YOUR_LIVE_DEMO_LINK  
-🔗 **Backend API:** YOUR_BACKEND_URL  
+🔗 **Live Demo:** https://job-portal-frontend-pied-ten.vercel.app/
+🔗 **Backend API:** https://job-portal-backend-aagn.onrender.com
 
 ---
 
