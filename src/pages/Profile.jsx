@@ -2,16 +2,24 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 
 function Profile() {
-  const [user, setUser] = useState(null);
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    bio: "",
+    experience: "",
+    skills: ""
+  });
+
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     api.get("/users/me")
       .then(res => {
-        setUser(res.data);
         setForm(res.data);
+        setLoading(false);
       })
-      .catch(console.error);
+      .catch(() => setLoading(false));
   }, []);
 
   const handleChange = (e) => {
@@ -20,29 +28,87 @@ function Profile() {
 
   const handleUpdate = async () => {
     try {
-      const res = await api.put("/users/me", form);
-      setUser(res.data);
-      alert("Profile updated ✅");
+      await api.put("/users/me", form);
+      setMessage("Profile updated successfully ✅");
     } catch {
-      alert("Update failed ❌");
+      setMessage("Update failed ❌");
     }
   };
 
-  if (!user) return <p>Loading...</p>;
+  if (loading) return <p className="text-center mt-10">Loading profile...</p>;
 
   return (
-    <div className="max-w-xl p-6 mx-auto mt-10 bg-white rounded shadow">
-      <h2 className="mb-4 text-2xl font-bold">My Profile</h2>
+    <div className="min-h-screen bg-gray-50 flex justify-center items-start pt-10">
+      <div className="w-full max-w-xl bg-white p-8 rounded-xl shadow">
 
-      <input name="name" value={form.name || ""} onChange={handleChange} className="input"/>
-      <input name="email" value={form.email || ""} disabled className="input"/>
-      <input name="bio" value={form.bio || ""} onChange={handleChange} className="input"/>
-      <input name="experience" value={form.experience || ""} onChange={handleChange} className="input"/>
-      <input name="skills" value={form.skills || ""} onChange={handleChange} className="input"/>
+        <h2 className="text-2xl font-bold mb-6">My Profile</h2>
 
-      <button onClick={handleUpdate} className="btn-primary mt-3">
-        Update Profile
-      </button>
+        {message && (
+          <p className="mb-4 text-sm text-center text-blue-600">
+            {message}
+          </p>
+        )}
+
+        <div className="space-y-4">
+
+          <div>
+            <label className="text-sm text-gray-600">Full Name</label>
+            <input
+              name="name"
+              value={form.name || ""}
+              onChange={handleChange}
+              className="w-full p-2 border rounded mt-1"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm text-gray-600">Email</label>
+            <input
+              value={form.email || ""}
+              disabled
+              className="w-full p-2 border rounded mt-1 bg-gray-100"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm text-gray-600">Bio</label>
+            <textarea
+              name="bio"
+              value={form.bio || ""}
+              onChange={handleChange}
+              className="w-full p-2 border rounded mt-1"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm text-gray-600">Experience</label>
+            <input
+              name="experience"
+              value={form.experience || ""}
+              onChange={handleChange}
+              className="w-full p-2 border rounded mt-1"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm text-gray-600">Skills</label>
+            <input
+              name="skills"
+              value={form.skills || ""}
+              onChange={handleChange}
+              className="w-full p-2 border rounded mt-1"
+            />
+          </div>
+
+          <button
+            onClick={handleUpdate}
+            className="w-full py-2 mt-4 text-white bg-blue-600 rounded hover:bg-blue-700"
+          >
+            Update Profile
+          </button>
+
+        </div>
+      </div>
     </div>
   );
 }
